@@ -48,6 +48,14 @@ ipcMain.handle('person/delete',async (event, args)=>{
   return test.deletePerson(dbPath,args);
 })
 
+ipcMain.handle('aid/save',async (event, args)=>{
+  return test.saveAid(dbPath,args.personId, args.aidData);
+})
+
+ipcMain.handle('get/aids',async (event, args)=>{
+  return test.getAids(dbPath,args.personId, args.text);
+})
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

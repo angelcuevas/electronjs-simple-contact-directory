@@ -29,7 +29,7 @@ const Home = () => {
     }
 
     return (
-        <SimpleLayout title='Contact Directory 123'>
+        <SimpleLayout title='Contact Directory'>
             <SearchBar onSearch={handleOnSearch} />
             <div style={{maxHeight: `${height*0.7}px` , overflowY:'auto'}}>
             {

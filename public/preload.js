@@ -18,6 +18,8 @@ window.addEventListener('DOMContentLoaded', () => {
     savePerson: (personData)=>ipcRenderer.invoke('person/save',personData),
     editPerson: (personData)=>ipcRenderer.invoke('person/edit',personData),
     deletePerson: (personId)=>ipcRenderer.invoke('person/delete',personId),
+    saveAid: (personId, aidData)=>ipcRenderer.invoke('aid/save',{personId,aidData}),
+    getAids:(personId, text)=>ipcRenderer.invoke('get/aids',{personId,text}),
   }
  
 

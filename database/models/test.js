@@ -88,12 +88,61 @@ const deletePerson = (dbPath, personId)=>{
         let query = `DELETE FROM people  WHERE id = ${personId}`;
 
         db.run(query, [], (err) => {
-            console.log(err)
+            
             if (err) {
                 reject([])
             }
 
-            resolve(true)
+            db.run(`DELETE FROM subsidies  WHERE people_id = ${personId}`, [], (err) => {
+            
+                if (err) {
+                    reject([])
+                }
+                resolve(true)
+              });
+
+            
+          });
+    })
+}
+
+
+const getAids = (dbPath, personId, text)=>{
+    const db = getDbConnection(dbPath);
+    if(!db){
+        return new Promise(resolve=>resolve([{name:dbPath}]))
+    }
+    return new Promise((resolve, reject)=>{
+        let query = `SELECT * FROM subsidies WHERE people_id=${personId}`;
+
+        if(text){
+            query += ` AND (description LIKE "%${text}%" OR comment LIKE "%${text}%") `
+        }
+        db.all(query, [], (err, rows) => {
+
+            if (err) {
+                reject([])
+            }
+
+            resolve(rows)
+          });
+    })
+
+}
+
+const saveAid = (dbPath, personId, aidData)=>{
+    const db = getDbConnection(dbPath); 
+    const date = new Date();
+    return new Promise((resolve, reject)=>{
+        let query = `INSERT INTO subsidies (people_id, description, date, comment ) values("${personId}","${aidData.description}","${date.toString()}","${aidData.comment}")`;
+
+        db.run(query, [], (err, rows) => {
+
+            if (err) {
+                reject([])
+            }
+
+            resolve(rows)
           });
     })
 }
@@ -103,7 +152,9 @@ module.exports = {
     getPeople,
     savePerson,
     editPerson,
-    deletePerson
+    deletePerson,
+    getAids,
+    saveAid
 }
 
 
