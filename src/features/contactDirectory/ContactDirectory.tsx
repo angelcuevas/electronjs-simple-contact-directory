@@ -1,7 +1,7 @@
 import React from 'react'
 import Home from './components/Home';
 import {
-    BrowserRouter,
+    HashRouter,
     Routes, Route
 } from "react-router-dom";
 import AddForm from './components/AddForm';
@@ -13,14 +13,14 @@ const ContactDirectory = () => {
 
     return (
         <div className="container">
-            <BrowserRouter>
+            <HashRouter>
                 <Routes>
                     <Route path="details" element={<PersonDetails/>} />
                     <Route path="add" element={<AddForm />} />
                     <Route path="edit" element={<AddForm />} />
                     <Route path="/" element={<Home />} />
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
         </div>
     );
 }
