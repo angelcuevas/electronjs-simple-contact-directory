@@ -7,15 +7,13 @@ const dbPath = isDev ? path.join(app.getAppPath(),'extraResources' ,"test.db") :
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
     webPreferences: {
         sandbox: false,
         contextIsolation:true,
         preload: path.join(__dirname, 'preload.js')
     }
   })
-
+  win.maximize();
   win.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname,'../build/index.html')}`)  
 }
 
@@ -33,6 +31,23 @@ app.whenReady().then(() => {
 ipcMain.handle('get/names',async (event, args)=>{
   return test.getNames(dbPath);
 })
+
+ipcMain.handle('get/people',async (event, args)=>{
+  return test.getPeople(dbPath,args);
+})
+
+ipcMain.handle('person/save',async (event, args)=>{
+  return test.savePerson(dbPath,args);
+})
+
+ipcMain.handle('person/edit',async (event, args)=>{
+  return test.editPerson(dbPath,args);
+})
+
+ipcMain.handle('person/delete',async (event, args)=>{
+  return test.deletePerson(dbPath,args);
+})
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

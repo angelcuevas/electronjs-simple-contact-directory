@@ -13,7 +13,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
   const API = {
-    getNames: ()=>ipcRenderer.invoke('get/names')
+    getNames: ()=>ipcRenderer.invoke('get/names'),
+    getPeople: (text)=>ipcRenderer.invoke('get/people',text),
+    savePerson: (personData)=>ipcRenderer.invoke('person/save',personData),
+    editPerson: (personData)=>ipcRenderer.invoke('person/edit',personData),
+    deletePerson: (personId)=>ipcRenderer.invoke('person/delete',personId),
   }
  
 
